@@ -57,27 +57,26 @@ export default function Home() {
     const dy = current.y - center.y;
     const radius = Math.sqrt(dx * dx + dy * dy);
 
-    // 円を描画
     ctx.beginPath();
     ctx.arc(center.x, center.y, radius, 0, 2 * Math.PI);
-    ctx.strokeStyle = '#ff0000';
+    ctx.strokeStyle = 'black';
     ctx.lineWidth = 2;
     ctx.stroke();
   };
 
   return (
-    <div style={{ textAlign: 'center', marginTop: '20px' }}>
-      <h1>コンパス作図ツール（サンプル）</h1>
+    <div className="text-center mt-5">
+      <h1 className="text-xl font-bold mb-4">コンパス作図ツール（サンプル）</h1>
       <canvas
         ref={canvasRef}
         width={600}
         height={400}
-        style={{ border: '1px solid #000' }}
+        className="mx-auto bg-gray-800 border border-gray-600"
         onMouseDown={handleMouseDown}
         onMouseMove={handleMouseMove}
         onMouseUp={handleMouseUp}
       />
-      <p>
+      <p className="mt-4">
         キャンバス上でクリックして中心点を決め、ドラッグして半径を調整することで円を描きます。
       </p>
     </div>
