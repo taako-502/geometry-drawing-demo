@@ -1,41 +1,47 @@
 'use client';
 
-import { useRef, useState, MouseEvent } from 'react';
+import { useRef, useState, useEffect, MouseEvent } from 'react';
 
 export default function Home() {
-  // Canvas の参照と描画状態の管理
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const startPosRef = useRef<{ x: number; y: number }>({ x: 0, y: 0 });
   const [isDrawing, setIsDrawing] = useState<boolean>(false);
-  const [startPos, setStartPos] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
 
-  // マウスダウン: 中心点を設定し、描画状態にする
+  useEffect(() => {
+    const handleWindowMouseUp = () => {
+      if (isDrawing) {
+        setIsDrawing(false);
+      }
+    };
+    window.addEventListener('mouseup', handleWindowMouseUp);
+    return () => {
+      window.removeEventListener('mouseup', handleWindowMouseUp);
+    };
+  }, [isDrawing]);
+
   const handleMouseDown = (e: MouseEvent<HTMLCanvasElement>): void => {
     const canvas = canvasRef.current;
     if (!canvas) return;
     const rect = canvas.getBoundingClientRect();
-    const x: number = e.clientX - rect.left;
-    const y: number = e.clientY - rect.top;
-    setStartPos({ x, y });
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    startPosRef.current = { x, y };
     setIsDrawing(true);
   };
 
-  // マウスムーブ: 現在のカーソル位置から半径を計算して円を再描画
   const handleMouseMove = (e: MouseEvent<HTMLCanvasElement>): void => {
     if (!isDrawing) return;
     const canvas = canvasRef.current;
     if (!canvas) return;
     const rect = canvas.getBoundingClientRect();
-    const currentX: number = e.clientX - rect.left;
-    const currentY: number = e.clientY - rect.top;
-    drawCircle(startPos, { x: currentX, y: currentY });
+    const currentPos = { x: e.clientX - rect.left, y: e.clientY - rect.top };
+    drawCircle(startPosRef.current, currentPos);
   };
 
-  // マウスアップ: 描画終了
   const handleMouseUp = (): void => {
     setIsDrawing(false);
   };
 
-  // 円を描画する関数
   const drawCircle = (
     center: { x: number; y: number },
     current: { x: number; y: number }
@@ -45,18 +51,16 @@ export default function Home() {
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    // キャンバスをクリア
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    // 中心点と現在位置から半径を計算
-    const dx: number = current.x - center.x;
-    const dy: number = current.y - center.y;
-    const radius: number = Math.sqrt(dx * dx + dy * dy);
+    const dx = current.x - center.x;
+    const dy = current.y - center.y;
+    const radius = Math.sqrt(dx * dx + dy * dy);
 
     // 円を描画
     ctx.beginPath();
     ctx.arc(center.x, center.y, radius, 0, 2 * Math.PI);
-    ctx.strokeStyle = 'black';
+    ctx.strokeStyle = '#ff0000';
     ctx.lineWidth = 2;
     ctx.stroke();
   };
