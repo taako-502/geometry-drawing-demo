@@ -1,7 +1,7 @@
 import './App.css'
 import { Route, Routes } from 'react-router-dom'
-import Sample1 from './pages/sample/1/page'
-import PaperCircle from './pages/sample/2/page'
+import Sample1 from './pages/sample/1/Sample1'
+import PaperCircle from './pages/sample/2/PaperCircle'
 import HomeMenu from './pages/HomeMenu'
 
 function App() {
