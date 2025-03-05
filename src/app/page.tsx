@@ -14,6 +14,14 @@ export default function HomeMenu() {
               コンパス作図ツール（サンプル）
             </Link>
           </li>
+          <li className="mb-4">
+            <Link
+              href="/sample/2"
+              className="text-blue-500 hover:underline text-xl"
+            >
+              コンパス作図ツール（Paper.js）
+            </Link>
+          </li>
         </ul>
       </nav>
     </div>
