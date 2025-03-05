@@ -1,9 +1,8 @@
 'use client'
 
-import dynamic from 'next/dynamic'
 import { useEffect } from 'react'
 
-const PaperCircle = () => {
+export default function PaperCircle() {
   useEffect(() => {}, [])
 
   return (
@@ -12,5 +11,3 @@ const PaperCircle = () => {
     </div>
   )
 }
-
-export default dynamic(() => Promise.resolve(PaperCircle), { ssr: false })

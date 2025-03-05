@@ -1,4 +1,5 @@
-import Link from 'next/link'
+// pages/HomeMenu.tsx
+import { Link } from 'react-router-dom'
 
 export default function HomeMenu() {
   return (
@@ -8,7 +9,7 @@ export default function HomeMenu() {
         <ul>
           <li className="mb-4">
             <Link
-              href="/sample/1"
+              to="/sample/1"
               className="text-blue-500 hover:underline text-xl"
             >
               コンパス作図ツール（サンプル）
@@ -16,7 +17,7 @@ export default function HomeMenu() {
           </li>
           <li className="mb-4">
             <Link
-              href="/sample/2"
+              to="/sample/2"
               className="text-blue-500 hover:underline text-xl"
             >
               コンパス作図ツール（Paper.js）
